@@ -54,5 +54,11 @@ public class StudentController {
 		}
 		return repo.updateByUsingIds(set, address);
 	}
+	
+	
+	@RequestMapping(value = "/bulkUpdate", method = RequestMethod.POST)
+	Integer bulkUpdate(@RequestBody BulkUpdateInput bulkUpdateInput) {
+		return repo.updateByUsingIds(bulkUpdateInput.getSet(), bulkUpdateInput.getAddress());
+	}
 
 }
