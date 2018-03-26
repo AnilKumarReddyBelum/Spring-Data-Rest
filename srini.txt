@@ -1,0 +1,59 @@
+package com.sri;
+import java.util.HashMap;
+import java.util.Map;
+public class BinaryTree1 {
+public static void main(String[] args) {
+Map<Integer, Integer> map=new HashMap<Integer,Integer>();
+int arr[]={1,2,3,0,6,4,5};
+int sumARR=arr.length+1;
+int[] powerResult=new BinaryTree1().power(sumARR);
+/*System.out.println(powerResult[0]);
+System.out.println(powerResult[1]);*/
+int main=0;
+if(powerResult[1]!=0 || powerResult[1]!=1)
+{
+main=powerResult[0]+powerResult[1]/2;
+}
+int count=2;
+for(int i=0;i<main;i++){
+int temp;
+temp=arr[i];
+arr[i]=arr[i+count];
+arr[i+count]=temp;
+count++;
+}
+int result=0;
+for(int i=0;i<arr.length;i++)
+{
+//System.out.println(arr[i]);
+int temp=(int) Math.pow(2,i);
+result=0;
+for(int j=i;j<temp;j++)
+{
+result=result+arr[j];
+}
+map.put(i, result);
+}
+System.out.println(map.get(0));
+System.out.println(map.get(1));
+System.out.println(map.get(2));
+}
+public int[] power(int value)
+{
+int powerOfValue=value;
+int leafNodeCount=powerOfValue;
+powerFinder : for(int i=0;i<=leafNodeCount;i++){
+int r=powerOfValue/2;
+powerOfValue=r;
+if(r==0){
+powerOfValue=i;
+leafNodeCount=(int) (leafNodeCount-Math.pow(2, i));
+break powerFinder;
+}
+}
+return new int[]{powerOfValue,leafNodeCount};
+}
+public void test()
+{
+}
+}
