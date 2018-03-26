@@ -1,59 +1,106 @@
-package com.sri;
 import java.util.HashMap;
 import java.util.Map;
-public class BinaryTree1 {
-public static void main(String[] args) {
-Map<Integer, Integer> map=new HashMap<Integer,Integer>();
-int arr[]={1,2,3,0,6,4,5};
-int sumARR=arr.length+1;
-int[] powerResult=new BinaryTree1().power(sumARR);
-/*System.out.println(powerResult[0]);
-System.out.println(powerResult[1]);*/
-int main=0;
-if(powerResult[1]!=0 || powerResult[1]!=1)
-{
-main=powerResult[0]+powerResult[1]/2;
-}
-int count=2;
-for(int i=0;i<main;i++){
-int temp;
-temp=arr[i];
-arr[i]=arr[i+count];
-arr[i+count]=temp;
-count++;
-}
-int result=0;
-for(int i=0;i<arr.length;i++)
-{
-//System.out.println(arr[i]);
-int temp=(int) Math.pow(2,i);
-result=0;
-for(int j=i;j<temp;j++)
-{
-result=result+arr[j];
-}
-map.put(i, result);
-}
-System.out.println(map.get(0));
-System.out.println(map.get(1));
-System.out.println(map.get(2));
-}
-public int[] power(int value)
-{
-int powerOfValue=value;
-int leafNodeCount=powerOfValue;
-powerFinder : for(int i=0;i<=leafNodeCount;i++){
-int r=powerOfValue/2;
-powerOfValue=r;
-if(r==0){
-powerOfValue=i;
-leafNodeCount=(int) (leafNodeCount-Math.pow(2, i));
-break powerFinder;
-}
-}
-return new int[]{powerOfValue,leafNodeCount};
-}
-public void test()
-{
-}
+import java.util.Map.Entry;
+
+public class TreeSwap_278 {
+	public TreeSwap_278(){
+	}
+	// main method for your testing.
+		public static void main(String[] args) {
+			int[] tree = {1,2,3,0,6,4,5};
+			//int[] tree = {1, 2, 3, 4, 5, 6, 0,0,0,12,13};
+			TreeSwap_278 treeSwap_278= new TreeSwap_278();
+			tree=treeSwap_278.swap(tree);
+			treeSwap_278.sum(tree);
+		  }
+	
+	public int[] swap(int[] tree) {
+		// write your swap code here.
+		int[] powerResult=new TreeSwap_278().power(tree.length+1);
+		
+		int main=0;
+		if(powerResult[1]!=0 || powerResult[1]!=1)
+		{
+		main=powerResult[0]+powerResult[1]/2;
+		}
+		int count=2;
+		for(int i=0;i<main;i++){
+		int temp;
+		temp=tree[i];
+		tree[i]=tree[i+count];
+		tree[i+count]=temp;
+		count++;
+		}
+		//print code logic
+		System.out.print("Output after swap :: ");
+		for(int i=0;i<tree.length;i++)
+		{
+			System.out.print(tree[i]+" ");
+		}//print code logic ends
+		return tree;
+	
+	 }  
+	public Map<Integer,Integer> sum(int[] tree)  {
+		// write the sum code here
+		
+		Map<Integer,Integer> map=new HashMap<>();
+		
+		int[] powerResult=new TreeSwap_278().power(tree.length+1);
+		int treeLevel=0;
+		if(powerResult[1]!=0)
+		{
+			treeLevel=powerResult[0]+1;
+			
+		}else
+		{
+			treeLevel=powerResult[0];
+		}
+		
+		int result=0,temp=0;
+		int startPositionOfEachLevel=0;
+		for(int i=0;i<treeLevel;i++)
+		{
+			if(powerResult[0]>i){
+			temp=(int) Math.pow(2,i);
+		}
+			else{
+			temp=powerResult[1];
+		}
+		
+		result=0;
+		startPositionOfEachLevel=(int) Math.pow(2,i);
+		for(int j=startPositionOfEachLevel;j<startPositionOfEachLevel+temp;j++)
+		{
+		result=result+tree[j-1];
+		}
+		map.put(i, result);
+		}
+		
+		//print logic for with Level number as key and sum as Value
+		System.out.print("\nA map with level number as key and sum as value :: ");
+		 for (Entry<Integer, Integer> entry : map.entrySet()) 
+		{
+			System.out.print("["+entry.getKey()+","+entry.getValue()+ "] ");
+		}
+		return map;
+	}
+	
+
+	public int[] power(int value)
+	{
+	//find levels of tree
+	int powerOfValue=value;
+	int leafNodeCount=powerOfValue;
+	powerFinder : for(int i=0;i<=leafNodeCount;i++){
+	int r=powerOfValue/2;
+	powerOfValue=r;
+	if(r==0){
+	powerOfValue=i;
+	leafNodeCount=(int) (leafNodeCount-Math.pow(2, i));
+	break powerFinder;
+	}
+	}
+	return new int[]{powerOfValue,leafNodeCount};
+	}
+	
 }
